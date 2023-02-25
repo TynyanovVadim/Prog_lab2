@@ -34,7 +34,9 @@ IntVector *int_vector_copy(const IntVector *v)
     for (int i = 0; i < v->size; i++) {
         copy_data[i] = (v->data)[i];
     }
-    copy_vector->data = v->data;
+    copy_vector->data = copy_data;
+    copy_vector->size = v->size;
+    copy_vector->capacity = v->capacity;
 
     return copy_vector;
 }
@@ -68,15 +70,15 @@ size_t int_vector_get_capacity(const IntVector *v)
 
 int int_vector_push_back(IntVector *v, int item)
 {
-    int index = int_vector_get_size(v);
-    int capacity = int_vector_get_capacity(v);
+    size_t index = int_vector_get_size(v);
+    size_t capacity = int_vector_get_capacity(v);
     if (index == capacity) {
         if (int_vector_reserve(v, capacity + 2)) {
             return -1;
         }
     }
     (v->data)[index] = item;
-    v->size++;
+    (v->size)++;
     return 0;
 }
 
@@ -89,10 +91,12 @@ void int_vector_pop_back(IntVector *v)
 
 int int_vector_shrink_to_fit(IntVector *v)
 {
-    int* new_data = realloc(v->data, v->size);
+    int* new_data = realloc(v->data, v->size * sizeof(int));
     if (!new_data) {
         return -1;
     }
+    v->data = new_data;
+    v->capacity = v->size;
     return 0;
 }
 
@@ -102,7 +106,7 @@ int int_vector_resize(IntVector *v, size_t new_size)
         if (int_vector_reserve(v, new_size)) {
             return -1;
         }
-        for (int i = v->size; i < new_size, i++) {
+        for (int i = v->size; i < new_size; i++) {
             (v->data)[i] = 0;
         }
     }
@@ -113,11 +117,12 @@ int int_vector_resize(IntVector *v, size_t new_size)
 int int_vector_reserve(IntVector *v, size_t new_capacity)
 {
     if (new_capacity > v->capacity) {
-        int *new_data = realloc(v, new_capacity);
+        int *new_data = realloc(v->data, new_capacity * sizeof(int));
         if (!new_data) {
             return -1;
         }
         v->data = new_data;
+        v->capacity = new_capacity;
     }
     return 0;
 }
