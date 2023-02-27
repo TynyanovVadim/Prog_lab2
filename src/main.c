@@ -16,9 +16,13 @@ int main()
     if (!vector1) {
         return -1;
     }
-    int_vector_pop_back(vector1);
 
-    printf("vector1 capacity=0\n");
+    printf("vector1");
+    pritn_vector(vector1);
+
+    int_vector_pop_back(vector1);
+    printf("vector1 pop back\n");
+    printf("vector1");
     pritn_vector(vector1);
 
     for (int i = 0; i < 10; i++) {
