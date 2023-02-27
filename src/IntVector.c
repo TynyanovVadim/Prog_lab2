@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <stdio.h>
+#include <memory.h>
 
 #include "IntVector.h"
 
@@ -31,9 +33,10 @@ IntVector *int_vector_copy(const IntVector *v)
         free(copy_vector);
         return NULL;
     }
-    for (int i = 0; i < v->size; i++) {
-        copy_data[i] = (v->data)[i];
-    }
+    // for (int i = 0; i < v->size; i++) {
+    //     copy_data[i] = (v->data)[i];
+    // }
+    memcpy(copy_data, v->data, sizeof(int) * v->size);
     copy_vector->data = copy_data;
     copy_vector->size = v->size;
     copy_vector->capacity = v->capacity;
@@ -73,7 +76,7 @@ int int_vector_push_back(IntVector *v, int item)
     size_t index = int_vector_get_size(v);
     size_t capacity = int_vector_get_capacity(v);
     if (index == capacity) {
-        if (int_vector_reserve(v, capacity * 2)) {
+        if (int_vector_reserve(v, (capacity + 1) * 2)) {
             return -1;
         }
     }
