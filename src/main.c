@@ -44,6 +44,7 @@ int main()
     pritn_vector(vector2);
 
     printf("Set item index = 3 value = 5\n");
+    printf("vector2\n");
     int_vector_set_item(vector2, 3, 5);
     pritn_vector(vector2);
 
