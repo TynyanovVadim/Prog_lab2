@@ -2,14 +2,6 @@
 
 #include "IntVector.h"
 
-void pritn_vector(IntVector *v) {
-    for (int i = 0; i < v->size; i++) {
-        printf("%d ", int_vector_get_item(v, i));
-    }
-    printf("\n");
-    printf("size-%ld, capacity-%ld\n", v->size, v->capacity);
-}
-
 int main()
 {
     IntVector *vector1 = int_vector_new(0);
