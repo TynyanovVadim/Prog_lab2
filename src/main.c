@@ -16,6 +16,7 @@ int main()
     if (!vector1) {
         return -1;
     }
+    int_vector_pop_back(vector1);
 
     printf("vector1 capacity=0\n");
     pritn_vector(vector1);
